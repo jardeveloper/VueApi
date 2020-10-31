@@ -36,12 +36,11 @@ const authRoutes = require('./routes/auth');
 // route middlewares
 app.use('/api/dashboard', verifyToken, dashboadRoutes);
 app.use('/api/user', authRoutes);
-app.get('/', (req, res) => {
-    res.json({
-        estado: true,
-        mensaje: 'funciona!'
-    })
-});
+
+// Middleware para Vue.js router modo history
+const history = require('connect-history-api-fallback');
+app.use(history());
+app.use(express.static(__dirname + "/public"));
 
 // iniciar server
 const PORT = process.env.PORT || 3001;
